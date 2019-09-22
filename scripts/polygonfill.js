@@ -2,8 +2,20 @@ var view;
 var ctx;
 var polygons = {
     convex: {
-        color: '', // choose color here!
+        color: 'red', // choose color here!
         vertices: [
+            // {x: 100, y:100},
+            // {x: 110, y:300},
+            // {x: 300, y:500},
+            // {x: 600, y:300},
+            // {x: 300, y: 50},
+            // {x: 600, y:100}
+
+            {x:100, y:100},
+            {x:600, y:150},
+            {x:700, y:400},
+            {x:500, y:450},
+            {x:200, y:350}
             // fill in vertices here!
         ]
     },
@@ -60,7 +72,38 @@ function DrawPolygon(polygon) {
 
 
     // Step 1: populate ET with edges of polygon
+    var k;
+    var polygon_array = polygon.vertices;
+    var vertex_1 = {};
+    var vertex_2 = {};
+    for(k =0; k < polygon_array.length; k++) {
+        vertex_1 = {
+            x: polygon_array[k].x,
+            y: polygon_array[k].y
+        }; 
+        if(k+1 === polygon_array.length){
+            vertex_2 = {
+                x: polygon_array[0].x,
+                y: polygon_array[0].y
+            };
+        } else {
+            vertex_2 = {
+                x: polygon_array[k+1].x,
+                y: polygon_array[k+1].y
+            };
+        }
+        var y_max = Math.max(vertex_1.y, vertex_2.y);
+        var y_min = Math.min(vertex_1.y, vertex_2.y);
+        var x_min = Math.min(vertex_1.x, vertex_2.x);
 
+
+        var delta_y = vertex_2.y - vertex_1.y;
+        var delta_x = vertex_2.x - vertex_1.x;
+
+        edge_table[y_min].InsertEdge(new EdgeEntry(y_max, x_min, delta_x, delta_y));
+        console.log(edge_table[y_min]);
+        
+    }
 
     // Step 2: set y to first scan line with an entry in ET
 
