@@ -95,6 +95,10 @@ function DrawPolygon(polygon) {
         var y_max = Math.max(vertex_1.y, vertex_2.y);
         var y_min = Math.min(vertex_1.y, vertex_2.y);
         var x_min = Math.min(vertex_1.x, vertex_2.x);
+        /**
+         * Find x-min and y-min points
+         * CHECK FOR HORIZONTAL LINES AND OMIT FROM ET
+         */
 
 
         var delta_y = vertex_2.y - vertex_1.y;
@@ -106,7 +110,17 @@ function DrawPolygon(polygon) {
     }
 
     // Step 2: set y to first scan line with an entry in ET
-
+    var i;
+    lowest_y = polygon_array[0].y;
+    for(i=0; i < polygon_array.length; i++) {
+        temp_y = polygon_array[i].y;
+        if(temp_y < lowest_y) {
+            lowest_y = temp_y;
+        }
+    }
+    console.log(lowest_y);
+    var y = edge_table[lowest_y];
+    console.log(y);
 
     // Step 3: Repeat until ET[y] is NULL and AL is NULL
     //   a) Move all entries at ET[y] into AL
@@ -115,6 +129,16 @@ function DrawPolygon(polygon) {
     //   d) Draw horizontal line for each span (pairs of entries in the AL)
     //   e) Increment y by 1
     //   f) Update x-values for all remaining entries in the AL (increment by 1/m)
+    var cur_edge = edge_table[y];
+    
+    do{
+        //add from the edgetable lowest entry to the active list 
+        active_list.InsertEdge(cur_edge);
+        while()
+
+    }while((edge_table[y] != null) && (active_list != null))
+
+    
 }
 
 // SelectNewPolygon(): triggered when new selection in drop down menu is made
