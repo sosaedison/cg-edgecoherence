@@ -105,22 +105,21 @@ function DrawPolygon(polygon) {
         var delta_x = vertex_2.x - vertex_1.x;
 
         edge_table[y_min].InsertEdge(new EdgeEntry(y_max, x_min, delta_x, delta_y));
-        console.log(edge_table[y_min]);
+        //console.log(edge_table[y_min]);
         
     }
 
     // Step 2: set y to first scan line with an entry in ET
     var i;
-    lowest_y = polygon_array[0].y;
+    var lowest_y = polygon_array[0].y;
     for(i=0; i < polygon_array.length; i++) {
         temp_y = polygon_array[i].y;
         if(temp_y < lowest_y) {
             lowest_y = temp_y;
         }
     }
-    console.log(lowest_y);
-    var y = edge_table[lowest_y];
-    console.log(y);
+    var y = lowest_y;
+   
 
     // Step 3: Repeat until ET[y] is NULL and AL is NULL
     //   a) Move all entries at ET[y] into AL
@@ -129,15 +128,34 @@ function DrawPolygon(polygon) {
     //   d) Draw horizontal line for each span (pairs of entries in the AL)
     //   e) Increment y by 1
     //   f) Update x-values for all remaining entries in the AL (increment by 1/m)
-    var cur_edge = edge_table[y];
-    
-    do{
-        //add from the edgetable lowest entry to the active list 
-        active_list.InsertEdge(cur_edge);
-        while()
 
-    }while((edge_table[y] != null) && (active_list != null))
+    //add from the edgetable lowest entry to the active list 
+   
+    while((edge_table[y] != null) && (active_list != null)) {
 
+        if(edge_table[y].first_entry != null) {
+            active_list[y] = edge_table[y];
+        } else {
+            var prev_edge = active_list[y-1];
+
+            console.log(prev_edge)
+           
+            
+            // while(prev_edge.first_entry != null) {
+            //     var slope = prev_edge.first_entry.inv_slope;
+            //     var new_x = prev_edge.first_entry.x + slope;
+            //     var new_y = prev_edge.first_entry.y_max;
+
+            //     new_list = new EdgeList(new EdgeEntry(new_y, new_x, slope));
+            //     active_list[y] = new_list;
+
+            //     prev_edge = prev_edge.first_entry;
+            // }
+        }
+        y++;
+    }
+
+    console.log(active_list);
     
 }
 
