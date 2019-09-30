@@ -113,7 +113,9 @@ function DrawPolygon(polygon) {
 
         var entry = new EdgeEntry(y_max, x_min, delta_x, delta_y);
         
-        edge_table[y_min].InsertEdge(entry);
+        if(delta_y/delta_x !== 0) {
+            edge_table[y_min].InsertEdge(entry);
+        }
         console.log(edge_table[y_min]);
         
     }
